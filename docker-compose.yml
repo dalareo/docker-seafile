@@ -1,0 +1,24 @@
+version: '2'
+services:
+  seafile:
+     build: .
+     ports:
+      - 80:8000
+      - 8082:8082
+     volumes:
+      - /opt/seafile
+     links:
+      - mysql:db
+     entrypoint: tail -f /dev/null
+
+  mysql:
+     image: mysql:5.7
+     ports:
+      - 3306:3306
+     volumes:
+      - /var/lib/mysql
+     environment:
+      - MYSQL_DATABASE=seafile
+      - MYSQL_USER=seafile
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
